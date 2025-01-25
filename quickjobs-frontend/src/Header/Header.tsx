@@ -3,6 +3,7 @@ import { IconBell } from '@tabler/icons-react';
 import { IconSettings } from '@tabler/icons-react';
 import { Indicator, Avatar } from '@mantine/core';
 import NavLinks from './NavLinks';
+import profileImage from "../assets/profile.png";
 
 const Header = () => {
   return (
@@ -17,7 +18,7 @@ const Header = () => {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <div className="text-1xl font-semibold">Saurabh</div>
-          <Avatar src="avatar.png" alt="it's me" />
+          <Avatar src={profileImage} alt="it's me" />
         </div>
         <div className="bg-cloud-burst-900 p-1.5 rounded-full">
           <IconSettings stroke={1.5} />
