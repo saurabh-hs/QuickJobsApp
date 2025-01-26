@@ -5,6 +5,7 @@ import mainImage from "../assets/main.jpg";
 import avatar from "../assets/profileavatar.png";
 import avatar1 from "../assets/avatar1.png";
 import avatar2 from "../assets/avatar2.png";
+import Google from "../Logos/google.png";
 
 const DreamJob = () => {
   return (
@@ -52,7 +53,7 @@ const DreamJob = () => {
           <div className="absolute left-6 w-fit top-[3%] border-cloud-burst-700 border rounded-lg p-2 backdrop-blur-md flex flex-col gap-3">
             <div className="flex gap-2 items-center">
               <div className="w-12 h-12 p-1 bg-cloud-burst-200 rounded-lg">
-                <img src="../assets/react.svg" alt="Google img" />
+                <img src={Google} alt="Google img" />
               </div>
               <div className="text-sm text-cloud-burst-700">
                 <div>Software Engineer</div>
