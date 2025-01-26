@@ -39,7 +39,7 @@ const DreamJob = () => {
         <div className="w-[38rem] relative">
           <img src={mainImage} alt="Main Img" className="mix-blend-multiply"/>
           <div className="absolute right-10 w-fit top-[60%] border-cloud-burst-700 border rounded-lg p-2 backdrop-blur-md">
-            <div className="text-center mb-1 text-sm text-cloud-burst-900 text-semibolt">
+            <div className="text-center mb-1 text-sm text-cloud-burst-900 font-semibold">
               10K+ got job
             </div>
             <Avatar.Group>
