@@ -11,9 +11,6 @@ const Companies=()=> {
                         <img className="h-14 " src={`../Logos/${company}.png`} alt={company} />
                     </div>)
                 }
-                <div>
-                    <img src="" alt="" />
-                </div>
             </Marquee>
         </div>
     );
