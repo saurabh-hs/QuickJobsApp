@@ -39,7 +39,7 @@ const DreamJob = () => {
       <div className="w-[55%] flex items-center justify-center">
         <div className="w-[38rem] relative">
           <img src={mainImage} alt="Main Img" className="mix-blend-multiply"/>
-          <div className="absolute right-10 w-fit top-[60%] border-cloud-burst-700 border rounded-lg p-2 backdrop-blur-md">
+          <div className="absolute right-10 w-fit top-[60%] border-cloud-burst-900 border rounded-lg p-2 backdrop-blur-md">
             <div className="text-center mb-1 text-sm text-cloud-burst-900 font-semibold">
               10K+ got job
             </div>
@@ -50,7 +50,7 @@ const DreamJob = () => {
               <Avatar>+9K</Avatar>
             </Avatar.Group>
           </div>
-          <div className="absolute left-6 w-fit top-[3%] border-cloud-burst-700 border rounded-lg p-2 backdrop-blur-md flex flex-col gap-3">
+          <div className="absolute left-6 w-fit top-[3%] border-cloud-burst-900 border rounded-lg p-2 backdrop-blur-md flex flex-col gap-3">
             <div className="flex gap-2 items-center">
               <div className="w-12 h-12 p-1 bg-cloud-burst-200 rounded-lg">
                 <img src={Google} alt="Google img" />
