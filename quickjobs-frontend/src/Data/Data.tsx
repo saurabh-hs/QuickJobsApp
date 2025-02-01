@@ -22,7 +22,7 @@ export const jobCategory = [
         "status": "1k+ new job posted"
     },
     {
-        "name": "Customer support",
+        "name": "Customer Support",
         "desc": "Assist customers with inquiries and issues",
         "status": "1.2k+ new job posted"
     },
@@ -90,3 +90,10 @@ export const testimonials = [
         "rating": 4
     }
 ];
+
+export const footerLinks = [
+    {title: "Product", links: ["Find Job", "Find Company", "Find Employee"]},
+    {title: "Company", links:["About Us", "Contact Us", "Privacy Policy", "Terms & Conditions"]},
+    {title: "Support", links:["Help & Support", "Feedback", "FAQs"]}
+]
+

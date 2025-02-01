@@ -13,7 +13,7 @@ const JobCategory=()=>{
                     jobCategory.map((category)=><Carousel.Slide>
                         <div className="flex flex-col mb-10 items-center w-64 mt-5 gap-2 border border-cloud-burst-900 p-5 rounded-xl hover:cursor-pointer hover:shadow-[0_0_5px_2px_black] my-7 transition duration-600 ease-in-out !shadow-cloud-burst-100">
                             <div className="p-2 bg-cloud-burst-500 rounded-full">
-                                <img className="h-8 w-8" src={`../../../public/Category/${category.name}.png`} alt={category.name} />
+                                <img className="h-8 w-8" src={`../../public/Category/${category.name}.png`} alt={category.name} />
                             </div>
                             <div className="text-cloud-burst-900 text-xl font-semibold">{category.name}</div>
                             <div className="text-sm text-center text-cloud-burst-500">{category.desc}</div>

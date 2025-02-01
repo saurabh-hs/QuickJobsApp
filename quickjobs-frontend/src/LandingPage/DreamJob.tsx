@@ -1,11 +1,11 @@
 import { TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { Avatar } from '@mantine/core';
-import mainImage from "../assets/main.jpg";
-import avatar from "../assets/profileavatar.png";
+import mainImage from "../assets/Boy.png";
+import avatar from "../assets/profile.png";
 import avatar1 from "../assets/avatar1.png";
 import avatar2 from "../assets/avatar2.png";
-import Google from "../../public/Logos/Amazon.png";
+import Google from "../assets/G.png";
 
 const DreamJob = () => {
   return (

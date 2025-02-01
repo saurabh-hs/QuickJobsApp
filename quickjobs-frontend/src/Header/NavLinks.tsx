@@ -26,7 +26,7 @@ const NavLinks = () => {
         </div>
       ))}
     </div>
-  );
+  )
 };
 
 export default NavLinks;
