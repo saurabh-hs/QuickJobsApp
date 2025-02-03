@@ -6,7 +6,7 @@ import { useState } from "react";
 const SearchBar=()=> {
     const [value, setValue] = useState<[number, number]>([1, 100]);
     return(
-        <div className="flex gap-2 px-5 py-10">
+        <div className="flex gap-2 px-5 py-5">
             {
                 dropdownData.map((item, index) =><> <div key={index} className="w-1/5">
                     <MultiInputs {...item} />
@@ -20,10 +20,10 @@ const SearchBar=()=> {
                     <div>&#8377;{value[0]} LPA - &#8377;{value[1]} LPA</div>
                 </div>
                 <RangeSlider color="cloud-burst.8" size="xs" value={value} labelTransitionProps={{
-          transition: 'skew-down',
-          duration: 150,
-          timingFunction: 'linear',
-        }} onChange={setValue} />
+                transition: 'skew-down',
+                duration: 150,
+                timingFunction: 'linear',
+                }} onChange={setValue} />
             </div>
             
         </div>

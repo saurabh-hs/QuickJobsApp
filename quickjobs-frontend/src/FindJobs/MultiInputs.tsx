@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Checkbox, Combobox, Group, Pill, PillsInput, useCombobox, Input } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
 import { IconSelector } from '@tabler/icons-react';
 
 
@@ -90,7 +89,7 @@ const MultiInputs=(props:any)=>{
       <Combobox.Search
             value={search}
             onChange={(event) => setSearch(event.currentTarget.value)}
-            placeholder="Search groceries"
+            placeholder={props.title}
           />
         <Combobox.Options>
           {options}
