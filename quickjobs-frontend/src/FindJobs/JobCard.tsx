@@ -2,9 +2,10 @@ import { IconBookmark } from '@tabler/icons-react';
 import logo from "../assets/G.png";
 import { Divider, Text } from '@mantine/core';
 import { IconClockHour3 } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 
 const JobCard = (props:any)=> {
-    return <div className='bg-cloud-burst-400 p-4 w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
+    return <Link to="/jobs" className='bg-cloud-burst-400 p-4 w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
         <div className='flex justify-between'>
             <div className="flex gap-2 items-center">
                 <div className='p-2 bg-cloud-burst-200 rounded-md'>
@@ -34,7 +35,7 @@ const JobCard = (props:any)=> {
             <IconClockHour3 className='h-5 w-5 text-cloud-burst-50' stroke={1.5} /> Posted {props.postedDaysAgo} days ago
             </div>
         </div>
-    </div>
+    </Link>
 }
 
 export default JobCard;
