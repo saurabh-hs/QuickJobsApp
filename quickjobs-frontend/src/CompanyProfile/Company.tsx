@@ -5,6 +5,8 @@ import avatar1 from "../assets/avatar1.png";
 import avatar2 from "../assets/avatar2.png";
 import avatar from "../assets/profileavatar.png";
 import AboutComp from "./AboutComp";
+import CompanyJobs from "./CompanyJobs";
+import CompanyEmployees from "./CompanyEmployees";
 
 const Company=()=> {
     return <div className="w-3/4">
@@ -26,15 +28,15 @@ const Company=()=> {
         <Divider mx="xs" my="xl"/>
         <div>
             <Tabs variant="outline" radius="lg" defaultValue="about">
-            <Tabs.List className="[&_button]:!text-lg font-semibold [&_button[data-active='true']]:text-cloud-burst-600 [&_button[data-active='false']]:text-cloud-burst-900">
+            <Tabs.List className="[&_button]:!text-lg font-semibold mb-5 [&_button[data-active='true']]:text-cloud-burst-600 [&_button[data-active='false']]:text-cloud-burst-900">
             <Tabs.Tab value="about">About</Tabs.Tab>
             <Tabs.Tab value="jobs">Jobs</Tabs.Tab>
             <Tabs.Tab value="employees">Employees</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="about"><AboutComp /></Tabs.Panel>
-            <Tabs.Panel value="jobs">Second panel</Tabs.Panel>
-            <Tabs.Panel value="employees">Second panel</Tabs.Panel>
+            <Tabs.Panel value="jobs"><CompanyJobs /></Tabs.Panel>
+            <Tabs.Panel value="employees"><CompanyEmployees /></Tabs.Panel>
             </Tabs>
         </div>
     </div>
