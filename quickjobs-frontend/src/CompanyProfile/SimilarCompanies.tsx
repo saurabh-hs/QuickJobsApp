@@ -1,12 +1,12 @@
-import { jobList } from "../Data/JobsData";
-import JobCard from "../FindJobs/JobCard";
+import { similar } from "../Data/Company";
+import CompanyCard from "./CompanyCard";
 
 const SimilarCompanies=()=> {
-    return <div>
-    <div className="text-xl font-semibold mb-5 text-cloud-burst-900">Recommended Jobs</div>
-    <div className="flex flex-col flex-wrap gap-5">
+    return <div className="w-1/4">
+    <div className="text-xl font-semibold mb-5 text-cloud-burst-900">Similar Companies</div>
+    <div className="flex flex-col flex-wrap gap-5 justify-between">
         {
-           jobList.map((job, index) =>index<6 && <JobCard key={index} {...job} />)
+           similar.map((company, index)=><CompanyCard key={index} {...company}/>)
         }
     </div>
 </div>
