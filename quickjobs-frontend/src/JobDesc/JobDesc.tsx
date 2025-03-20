@@ -6,7 +6,7 @@ import { card, desc, skills } from "../Data/JobDescData";
 //@ts-ignore
 import DOMPurify from "dompurify";
 
-const JobDesc=()=> {
+const JobDesc=(props:any)=> {
     const data = DOMPurify.sanitize(desc);
     return <div className="">
         <div className='flex justify-between'>
@@ -21,9 +21,9 @@ const JobDesc=()=> {
             </div>
             <div className="flex flex-col gap-2 items-center">
                 <Link to="/apply-job">
-                <Button color="cloud-burst.9" size="sm" variant="light">Apply</Button>
+                <Button color="cloud-burst.9" size="sm" variant="light">{props.edit?"Edit":"Apply"}</Button>
                 </Link>
-                <IconBookmark className='text-cloud-burst-600 cursor-pointer' stroke={2} />
+                {props.edit?<Button color="red.5" size="sm" variant="outline">Delete</Button>:<IconBookmark className='text-cloud-burst-600 cursor-pointer' stroke={2} />}
             </div>
         </div>
         <Divider my="xl"/>
