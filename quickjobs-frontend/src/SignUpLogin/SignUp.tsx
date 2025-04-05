@@ -3,7 +3,7 @@ import { IconAt, IconLock } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
 const SignUp=()=> {
-    return <div className="w-1/2 px-20 text-left flex flex-col justify-center gap-3">
+    return <div className="w-[30vw] px-20 text-left flex flex-col justify-center gap-3">
         <div className="text-2xl font-semibold">Created Account</div>
         <TextInput withAsterisk label="Full Name" placeholder="Your name"/>
         <TextInput withAsterisk leftSection={<IconAt style={{width: rem(16), height: rem(16)}} />} label="Email" placeholder="Your email" />

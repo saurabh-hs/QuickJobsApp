@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 const Footer=()=> {
     const location = useLocation();
-    return location.pathname!="/signup"?<div className="pt-20 pb-5 flex gap-5 justify-around bg-cloud-burst-50 font-['Poppins']">
+    return location.pathname!="/signup"&&location.pathname!="/login"?<div className="pt-20 pb-5 flex gap-5 justify-around bg-cloud-burst-50 font-['Poppins']">
         <div className='w-1/4 flex flex-col gap-4'>
             <div className="flex gap-1 items-center">
                 <IconWorldDownload className="h-8 w-8 text-cloud-burst-950" stroke={2} />
