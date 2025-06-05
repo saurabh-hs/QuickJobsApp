@@ -68,7 +68,7 @@ const Profile=(props:any)=> {
             </ActionIcon></div>
             <div className="flex flex-col gap-8">
                 {
-                    props.experience.map((exp:any, index:any) =>  <ExpCard key={index} {...exp} />)
+                    props.experience.map((exp:any, index:any) =>  <ExpCard key={index} {...exp} edit={edit[3]} />)
                 }
             </div>
         </div>
