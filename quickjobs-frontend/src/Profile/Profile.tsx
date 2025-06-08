@@ -1,15 +1,19 @@
 import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
 import avatar from "../assets/profileavatar.png";
-import { IconBriefcase, IconDeviceFloppy, IconMapPin, IconPencil } from "@tabler/icons-react";
+import { IconBriefcase, IconDeviceFloppy, IconMapPin, IconPencil, IconPlus } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertCard from "./CertCard";
 import { useState } from "react";
 import fields from "../Data/Profile";
 import SelectInput from "./SelectInput";
+import ExpInput from "./ExpInput";
+import CertInput from "./CertInput";
 
 const Profile=(props:any)=> {
     const select=fields;
     const [edit, setEdit]=useState([false, false, false, false, false])
+    const [addExp, setAddExp] = useState(false);
+    const [addCert, setAddCert] = useState(false);
     const [about, setAbout]=useState(`${props.about}`);
     const [skills, setSkills]=useState(["HTML","CSS","JavaScript","React","Angular","Node.js","Python","Java","Ruby","PHP","SQL","MongoDB","PostgreSQL","Git","API Development","Testing and Debugging","Agile Methodologies","DevOps","AWS","Azure","Google Cloud"]);
     const handleEdit=(index:any)=>{
@@ -63,23 +67,31 @@ const Profile=(props:any)=> {
         </div>
         <Divider mx="xs" my="xl"/>
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-5 flex flex-start text-cloud-burst-700 justify-between">Experience <ActionIcon onClick={()=>handleEdit(3)} size="lg" color="cloud-burst.9" variant="subtle">
+            <div className="text-2xl font-semibold mb-5 flex flex-start text-cloud-burst-700 justify-between">Experience <div className="flex gap-2"><ActionIcon onClick={()=>setAddExp(true)} size="lg" color="cloud-burst.9" variant="subtle">
+            <IconPlus className="h-4/5 w-4/5" />
+            </ActionIcon><ActionIcon onClick={()=>handleEdit(3)} size="lg" color="cloud-burst.9" variant="subtle">
                 {edit[3]?<IconDeviceFloppy className="h-4/5 w-4/5" />:<IconPencil className="h-4/5 w-4/5" />}
-            </ActionIcon></div>
+            </ActionIcon></div></div>
             <div className="flex flex-col gap-8">
                 {
                     props.experience.map((exp:any, index:any) =>  <ExpCard key={index} {...exp} edit={edit[3]} />)
                 }
+                {addExp&&<ExpInput add setEdit={setAddExp} />}
             </div>
         </div>
         <Divider mx="xs" my="xl"/>
         <div className="px-3">
-            <div className="text-2xl font-semibold mb-5 flex flex-start text-cloud-burst-700 justify-between">Certifications <ActionIcon onClick={()=>handleEdit(4)} size="lg" color="cloud-burst.9" variant="subtle">
+            <div className="text-2xl font-semibold mb-5 flex flex-start text-cloud-burst-700 justify-between">Certifications <div className="flex gap-2"><ActionIcon onClick={()=>setAddCert(true)} size="lg" color="cloud-burst.9" variant="subtle">
+            <IconPlus className="h-4/5 w-4/5" />
+            </ActionIcon><ActionIcon onClick={()=>handleEdit(4)} size="lg" color="cloud-burst.9" variant="subtle">
                 {edit[4]?<IconDeviceFloppy className="h-4/5 w-4/5" />:<IconPencil className="h-4/5 w-4/5" />}
-            </ActionIcon></div>
+            </ActionIcon></div></div>
             <div className="flex flex-col gap-8">
                 {
-                    props.certifications.map((cert:any, index:any) =>  <CertCard key={index} {...cert} />)
+                    props.certifications.map((cert:any, index:any) =>  <CertCard key={index} edit={edit[4]} {...cert} />)
+                }
+                {
+                    addCert&&<CertInput setEdit={setAddCert} />
                 }
             </div>
         </div>
