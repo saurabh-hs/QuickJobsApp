@@ -2,22 +2,26 @@ import { Anchor, Button, Checkbox, Group, PasswordInput, Radio, TextInput, rem }
 import { IconAt, IconLock } from "@tabler/icons-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-const form={
-    name:"",
-    email:"",
-    password:"",
-    confirmPassword:"",
-    accountType:"APPLICANT",
+import { registerUser } from "../Services/UserService";
+const form = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    accountType: "APPLICANT",
 }
 
 const SignUp = () => {
-    const [value, setValue] = useState('react');
-
-    const [data, setData]=useState(form);
-
-    const handleChange=(event:any)=>{
-        if(typeof(event)=="string")setData({...data, accountType:event});
-        else setData({...data, [event.target.name]:event.target.value})
+    const [data, setData] = useState(form);
+    const [formError, setFormError]=useState(form);
+    const handleChange = (event: any) => {
+        if (typeof (event) == "string") setData({ ...data, accountType: event });
+        else setData({ ...data, [event.target.name]: event.target.value })
+    }
+    const handleSubmit = () => {
+        registerUser(data).then((res) => {
+            console.log(res);
+        }).catch((err) => (console.log(err)));
     }
 
     return <div className="w-[30vw] px-20 text-left flex flex-col justify-center gap-3">
@@ -33,12 +37,14 @@ const SignUp = () => {
             withAsterisk
         >
             <Group mt="xs">
-                <Radio className="py-4 px-6 border hover:bg-cloud-burst-900 has-[:checked]:bg-cloud-burst-400/5 has-[:checked]:border-cloud-burst-700 border-cloud-burst-300 rounded-lg" value="APPLICANT" label="Applicant" />
-                <Radio className="py-4 px-6 border hover:bg-cloud-burst-900 has-[:checked]:bg-cloud-burst-400/5 has-[:checked]:border-cloud-burst-700 border-cloud-burst-300 rounded-lg" value="EMPLOYER" label="Empolyer" />
+                <div className="flex gap-4">
+                    <Radio className="py-4 px-6 border hover:bg-cloud-burst-200 has-[:checked]:bg-cloud-burst-400/5 has-[:checked]:border-cloud-burst-700 border-cloud-burst-300 rounded-lg" value="APPLICANT" label="Applicant" />
+                    <Radio className="py-4 px-6 border hover:bg-cloud-burst-200 has-[:checked]:bg-cloud-burst-400/5 has-[:checked]:border-cloud-burst-700 border-cloud-burst-300 rounded-lg" value="EMPLOYER" label="Empolyer" />
+                </div>
             </Group>
         </Radio.Group>
         <Checkbox autoContrast label={<>I accept{' '}<Anchor>terms & conditions</Anchor></>} />
-        <Button autoContrast variant="filled">Sign Up</Button>
+        <Button onClick={handleSubmit} autoContrast variant="filled">Sign Up</Button>
         <div className="mx-auto">Have an account? <Link to="/login" className="text-cloud-burst-600 hover:underline">Login</Link></div>
     </div>
 }
