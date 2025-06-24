@@ -1,9 +1,11 @@
 import './App.css';
 import { Divider, MantineProvider, createTheme } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/tiptap/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/notifications/styles.css';
 import HomePage from './Pages/HomePage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Header/Header';
@@ -58,6 +60,7 @@ function App() {
 
   return (
     <MantineProvider theme={theme}>
+      <Notifications position="top-right" zIndex={1000} />
       <Router>
         <div className='relative'>
         <Header />
