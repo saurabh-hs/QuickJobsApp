@@ -31,6 +31,7 @@ const ResetPassword = (props: any) => {
             setOtpSent(true);
             setOtpSending(false);
             setResetLoader(true);
+            interval.start();
         }).catch((err) => {
             console.log(err);
             setOtpSending(false);
@@ -50,11 +51,16 @@ const ResetPassword = (props: any) => {
     }
 
     const resendOtp=()=>{
+        if(resendLoader) return;
         handleSendOtp();
     }
 
     const ChangeEmail=()=>{
         setOtpSent(false);
+        setResetLoader(false);
+        setSeconds(60);
+        setVerified(false);
+        interval.stop();
     }
 
     const handleResetPassword=()=>{
@@ -74,7 +80,7 @@ const ResetPassword = (props: any) => {
             {otpSent && <PinInput onComplete={handleVerifyOtp} length={6} className="mx-auto" size="md" gap="lg" type="number"/>}
             {otpSent && !verified &&
             <div>
-                <Button fullWidth loading={otpSending} color="cloud-burst.6" onClick={resendOtp} autoContrast variant="light">Resend OTP</Button>
+                <Button fullWidth loading={otpSending} color="cloud-burst.6" onClick={resendOtp} autoContrast variant="light">{resendLoader?seconds:"Resend OTP"}</Button>
                 <Button fullWidth loading={otpSending} onClick={ChangeEmail} autoContrast variant="filled">Change Email</Button>
             </div>
             }
