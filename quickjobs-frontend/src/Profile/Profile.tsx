@@ -1,18 +1,19 @@
 import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
 import avatar from "../assets/profileavatar.png";
-import {IconDeviceFloppy, IconMapPin, IconPlus } from "@tabler/icons-react";
+import {IconDeviceFloppy, IconPencil, IconPlus } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertCard from "./CertCard";
 import { useEffect, useState } from "react";
 import fields from "../Data/Profile";
 import ExpInput from "./ExpInput";
 import CertInput from "./CertInput";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../Services/ProfileService";
 import {Info} from "../Profile/Info";
+import { setProfile } from "../Slices/ProfileSlice";
 
 const Profile=(props:any)=> {
-    const select=fields;
+    const dispatch=useDispatch();
     const user = useSelector((state:any)=>state.user);
     const profile = useSelector((state:any)=>state.profile);
     const [edit, setEdit]=useState([false, false, false, false, false])
@@ -28,7 +29,7 @@ const Profile=(props:any)=> {
 
     useEffect(()=>{
         getProfile(user.id).then((data:any)=>{
-            console.log(data);
+            dispatch(setProfile(data));
         }).catch((error:any)=>{
             console.log(error);
         });
@@ -46,7 +47,7 @@ const Profile=(props:any)=> {
                 {edit[1]?<IconDeviceFloppy className="h-4/5 w-4/5" />:<IconPencil className="h-4/5 w-4/5" />}
             </ActionIcon></div>
             {
-                edit[1] ?   <Textarea value={about} placeholder="Enter about yourself..." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-sm text-cloud-burst-300 text-justify text-cloud-burst-400">{about}</div>
+                edit[1] ?   <Textarea value={about} placeholder="Enter about yourself..." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-sm text-cloud-burst-300 text-justify text-cloud-burst-400">{profile?.about}</div>
             }
         </div>
         <Divider mx="xs" my="xl"/>
@@ -57,7 +58,7 @@ const Profile=(props:any)=> {
             {
                 edit[2] ? <TagsInput value={skills} onChange={setSkills} placeholder="Add Skill" splitChars={[',',' ','|']} /> : <div className="flex flex-wrap gap-2">
                 {
-                    props.skills.map((skill:any, index:any)=> <div key={index} className="bg-cloud-burst-900 text-sm font-medium bg-opacity-80 rounded-3xl text-cloud-burst-50 px-3 py-1">{skill}</div>)
+                    profile?.skills?.map((skill:any, index:number)=> <div key={index} className="bg-cloud-burst-900 text-sm font-medium bg-opacity-80 rounded-3xl text-cloud-burst-50 px-3 py-1">{profile.skill}</div>)
                 }
             </div>
             }
@@ -71,7 +72,7 @@ const Profile=(props:any)=> {
             </ActionIcon></div></div>
             <div className="flex flex-col gap-8">
                 {
-                    props.experience.map((exp:any, index:any) =>  <ExpCard key={index} {...exp} edit={edit[3]} />)
+                    profile?.experiences?.map((exp:any, index:any) =>  <ExpCard key={index} {...exp} edit={edit[3]} />)
                 }
                 {addExp&&<ExpInput add setEdit={setAddExp} />}
             </div>
@@ -85,7 +86,7 @@ const Profile=(props:any)=> {
             </ActionIcon></div></div>
             <div className="flex flex-col gap-8">
                 {
-                    props.certifications.map((cert:any, index:any) =>  <CertCard key={index} edit={edit[4]} {...cert} />)
+                    profile?.certifications?.map((cert:any, index:number) =>  <CertCard key={index} edit={edit[4]} {...cert} />)
                 }
                 {
                     addCert&&<CertInput setEdit={setAddCert} />
