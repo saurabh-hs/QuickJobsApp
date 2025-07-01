@@ -1,16 +1,17 @@
-import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
+import { ActionIcon, Divider } from "@mantine/core";
 import avatar from "../assets/profileavatar.png";
 import {IconDeviceFloppy, IconPencil, IconPlus } from "@tabler/icons-react";
 import ExpCard from "./ExpCard";
 import CertCard from "./CertCard";
 import { useEffect, useState } from "react";
-import fields from "../Data/Profile";
 import ExpInput from "./ExpInput";
 import CertInput from "./CertInput";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../Services/ProfileService";
 import {Info} from "../Profile/Info";
 import { setProfile } from "../Slices/ProfileSlice";
+import About from "./About";
+import Skills from "./Skills";
 
 const Profile=(props:any)=> {
     const dispatch=useDispatch();
@@ -19,8 +20,6 @@ const Profile=(props:any)=> {
     const [edit, setEdit]=useState([false, false, false, false, false])
     const [addExp, setAddExp] = useState(false);
     const [addCert, setAddCert] = useState(false);
-    const [about, setAbout]=useState(`${props.about}`);
-    const [skills, setSkills]=useState(["HTML","CSS","JavaScript","React","Angular","Node.js","Python","Java","Ruby","PHP","SQL","MongoDB","PostgreSQL","Git","API Development","Testing and Debugging","Agile Methodologies","DevOps","AWS","Azure","Google Cloud"]);
     const handleEdit=(index:any)=>{
         const newEdit=[...edit];
         newEdit[index]=!newEdit[index];
@@ -42,27 +41,9 @@ const Profile=(props:any)=> {
         <div className="px-3 mt-16">
             <Info />
         <Divider mx="xs" my="xl"/>
-        <div className="px-3">
-            <div className="text-2xl font-semibold mb-3 flex flex-start text-cloud-burst-700 justify-between">About <ActionIcon onClick={()=>handleEdit(1)} size="lg" color="cloud-burst.9" variant="subtle">
-                {edit[1]?<IconDeviceFloppy className="h-4/5 w-4/5" />:<IconPencil className="h-4/5 w-4/5" />}
-            </ActionIcon></div>
-            {
-                edit[1] ?   <Textarea value={about} placeholder="Enter about yourself..." autosize minRows={3} onChange={(event) => setAbout(event.currentTarget.value)} /> : <div className="text-sm text-cloud-burst-300 text-justify text-cloud-burst-400">{profile?.about}</div>
-            }
-        </div>
+            <About />
         <Divider mx="xs" my="xl"/>
-        <div className="px-3">
-            <div className="text-2xl font-semibold mb-3 flex flex-start text-cloud-burst-700 justify-between">Skills <ActionIcon onClick={()=>handleEdit(2)} size="lg" color="cloud-burst.9" variant="subtle">
-                {edit[2]?<IconDeviceFloppy className="h-4/5 w-4/5" />:<IconPencil className="h-4/5 w-4/5" />}
-            </ActionIcon></div>
-            {
-                edit[2] ? <TagsInput value={skills} onChange={setSkills} placeholder="Add Skill" splitChars={[',',' ','|']} /> : <div className="flex flex-wrap gap-2">
-                {
-                    profile?.skills?.map((skill:any, index:number)=> <div key={index} className="bg-cloud-burst-900 text-sm font-medium bg-opacity-80 rounded-3xl text-cloud-burst-50 px-3 py-1">{profile.skill}</div>)
-                }
-            </div>
-            }
-        </div>
+            <Skills />
         <Divider mx="xs" my="xl"/>
         <div className="px-3">
             <div className="text-2xl font-semibold mb-5 flex flex-start text-cloud-burst-700 justify-between">Experience <div className="flex gap-2"><ActionIcon onClick={()=>setAddExp(true)} size="lg" color="cloud-burst.9" variant="subtle">
