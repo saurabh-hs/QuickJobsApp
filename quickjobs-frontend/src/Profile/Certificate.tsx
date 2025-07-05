@@ -20,7 +20,7 @@ const Certificate=()=>{
     </ActionIcon></div></div>
     <div className="flex flex-col gap-8">
         {
-            profile?.certifications?.map((cert:any, index:number) =>  <CertCard key={index} edit={edit} {...cert} />)
+            profile?.certifications?.map((cert:any, index:number) => <CertCard key={index} index={index} edit={edit} {...cert} />)
         }
         {
             addCert&&<CertInput setEdit={setAddCert} />

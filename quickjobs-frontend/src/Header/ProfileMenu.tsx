@@ -19,6 +19,7 @@ const ProfileMenu = () => {
   const user=useSelector((state:any)=>state.user);
   const [checked, setChecked] = useState(false);
   const [opened, setOpened] = useState(false);
+  const profile = useSelector((state: any) => state.profile);
   const handleLogout = () => {
     dispatch(removeUser());
   }
@@ -28,7 +29,7 @@ const ProfileMenu = () => {
       <Menu.Target>
         <div className="flex gap-2 items-center cursor-pointer">
           <div className="text-1xl font-semibold">{user.name}</div>
-          <Avatar src={profileImage} alt="it's me" />
+          <Avatar src={profile.picture?`data:image/jpeg;base64,${profile.picture}`:"../assets/avatar1.png"} alt="it's me" />
         </div>
       </Menu.Target>
 
