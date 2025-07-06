@@ -3,9 +3,10 @@ import logo from "../assets/G.png";
 import { Divider, Text } from '@mantine/core';
 import { IconClockHour3 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
+import { timeAgo } from '../Services/Utilities';
 
 const JobCard = (props:any)=> {
-    return <Link to="/jobs" className='bg-cloud-burst-400 p-4 w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
+    return <Link to={`/jobs/${props.id}`} className='bg-cloud-burst-400 p-4 w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
         <div className='flex justify-between'>
             <div className="flex gap-2 items-center">
                 <div className='p-2 bg-cloud-burst-200 rounded-md'>
@@ -13,7 +14,7 @@ const JobCard = (props:any)=> {
                 </div>
                 <div>
                     <div className='text-cloud-burst-50 text-950'>{props.jobTitle}</div>
-                    <div className='text-xs text-cloud-burst-100'>{props.company} &#x2022; {props.applicants} Applicants</div>
+                    <div className='text-xs text-cloud-burst-100'>{props.company} &#x2022; {props.applicants?props.applicants.length:0} Applicants</div>
                 </div>
             </div>
             <IconBookmark className='text-cloud-burst-100 cursor-pointer' stroke={2} />
@@ -24,16 +25,15 @@ const JobCard = (props:any)=> {
             <div>{props.location}</div>
         </div>
         <Text className='!text-xs text-justify !text-cloud-burst-100' lineClamp={2}>
-            {props.description}
+            {props.about}
         </Text>
         <Divider size="xs"/>
         <div className='flex justify-between'>
             <div className='text-cloud-burst-100 font-semibold'>
-                &#8377;{props.package}
+                &#8377;{props.packageOffered} LPA
             </div>
             <div className='flex gap-1 text-xs text-cloud-burst-100 items-center'>
-            <IconClockHour3 className='h-5 w-5 text-cloud-burst-50' stroke={1.5} /> Posted {props.postedDaysAgo} days ago
-            </div>
+            <IconClockHour3 className='h-5 w-5 text-cloud-burst-50' stroke={1.5} /> Posted {timeAgo(props.postTime)}</div>
         </div>
     </Link>
 }
