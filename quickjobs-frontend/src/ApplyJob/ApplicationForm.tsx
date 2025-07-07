@@ -11,10 +11,10 @@ const ApplicationForm=()=>{
         window.scrollTo({top:0, behavior:'smooth'})
         if(!form.isValid()) return;
         setPreview(!preview);
-        console.log(form.getValues());
     }
 
     const handleSubmit=()=> {
+        setSubmit(true);
         
     }
     const form = useForm({
