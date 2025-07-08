@@ -1,12 +1,26 @@
-import { IconBookmark } from '@tabler/icons-react';
+import { IconBookmark, IconBookmarkFilled } from '@tabler/icons-react';
 import logo from "../assets/G.png";
-import { Divider, Text } from '@mantine/core';
+import { Button, Divider, Text } from '@mantine/core';
 import { IconClockHour3 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { timeAgo } from '../Services/Utilities';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeProfile } from '../Slices/ProfileSlice';
 
 const JobCard = (props:any)=> {
-    return <Link to={`/jobs/${props.id}`} className='bg-cloud-burst-400 p-4 w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
+    const dispatch = useDispatch();
+    const profile = useSelector((state:any)=>state.profile);
+    const handleSaveJob=()=>{
+        let savedJobs:any = [...profile.savedJobs];
+        if(savedJobs?.includes(props.id)) {
+            savedJobs=savedJobs?.filter((id:any)=>id!==props.id);
+        }else{
+            savedJobs=[...savedJobs, props.id];
+        }
+        let updatedProfile={...profile, savedJobs:savedJobs};
+        dispatch(changeProfile(updatedProfile));
+    }
+    return <div className='bg-cloud-burst-400 p-4 w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
         <div className='flex justify-between'>
             <div className="flex gap-2 items-center">
                 <div className='p-2 bg-cloud-burst-200 rounded-md'>
@@ -17,7 +31,7 @@ const JobCard = (props:any)=> {
                     <div className='text-xs text-cloud-burst-100'>{props.company} &#x2022; {props.applicants?props.applicants.length:0} Applicants</div>
                 </div>
             </div>
-            <IconBookmark className='text-cloud-burst-100 cursor-pointer' stroke={2} />
+            {profile.savedJobs?.includes(props.id)?<IconBookmarkFilled onClick={handleSaveJob} className='cursor-pointer text-cloud-burst-800' stroke={2} />:<IconBookmark onClick={handleSaveJob} className='text-cloud-burst-100 cursor-pointer hover:text-cloud-burst-800' stroke={2} />}
         </div>
         <div className='flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-cloud-burst-600 [&>div]:text-cloud-burst-50 [&>div]:rounded-lg [&>div]:text-xs'>
             <div>{props.experience}</div>
@@ -35,7 +49,10 @@ const JobCard = (props:any)=> {
             <div className='flex gap-1 text-xs text-cloud-burst-100 items-center'>
             <IconClockHour3 className='h-5 w-5 text-cloud-burst-50' stroke={1.5} /> Posted {timeAgo(props.postTime)}</div>
         </div>
-    </Link>
+        <Link to={`/jobs/${props.id}`}>
+            <Button fullWidth color='cloud-burst.8' variant='outline'>View Job</Button>
+        </Link>
+    </div>
 }
 
 export default JobCard;

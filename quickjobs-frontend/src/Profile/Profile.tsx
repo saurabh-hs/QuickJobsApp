@@ -1,5 +1,5 @@
 import { Avatar, Divider, FileInput, Overlay } from "@mantine/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {Info} from "../Profile/Info";
 import { changeProfile } from "../Slices/ProfileSlice";
 import About from "./About";
@@ -10,10 +10,10 @@ import { useHover } from "@mantine/hooks";
 import { IconEdit } from "@tabler/icons-react";
 import { profile } from "../Data/TalentData";
 import { successNotification } from "../Services/NotificationService";
+import { getBase64 } from "../Services/Utilities";
 
 const Profile=()=> {
     const dispatch=useDispatch();
-    const user = useSelector((state:any)=>state.user);
     const{hovered, ref} = useHover();
 
     const handleFileChange=async (image:any)=>{
@@ -23,14 +23,6 @@ const Profile=()=> {
         successNotification("Success", "Profile Picture Updated Successfully");
     }
 
-    const getBase64=(file:any)=>{
-        return new Promise((resolve, reject)=>{
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload=()=>resolve(reader.result);
-            reader.onerror=error=>reject(error);
-        })
-    }
     return <div className="w-4/5 mx-auto">
         <div className="relative">
             <img className="rounded-t-2xl" src="../../public/Profile/banner.jpg" alt="" />

@@ -1,13 +1,35 @@
-import { IconBookmark } from "@tabler/icons-react";
+import { IconBookmark, IconBookmarkFilled } from "@tabler/icons-react";
 import { ActionIcon, Button, Divider } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { card } from "../Data/JobDescData";
 //@ts-ignore
 import DOMPurify from "dompurify";
 import { timeAgo } from "../Services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../Slices/ProfileSlice";
+import { useEffect, useState } from "react";
 
 const JobDesc=(props:any)=> {
+    const dispatch = useDispatch();
+    const profile = useSelector((state:any)=>state.profile);
+    const [applied, setApplied]=useState(false);
     const data = DOMPurify.sanitize(props.description);
+    const user = useSelector((state:any)=>state.user);
+    const handleSaveJob=()=>{
+        let savedJobs:any = [...profile.savedJobs];
+        if(savedJobs?.includes(props.id)) {
+            savedJobs=savedJobs?.filter((id:any)=>id!==props.id);
+        }else{
+            savedJobs=[...savedJobs, props.id];
+        }
+        let updatedProfile={...profile, savedJobs:savedJobs};
+        dispatch(changeProfile(updatedProfile));
+    }
+    useEffect(()=>{
+        if(props.applicant?.filter((applicant:any)=>applicant.applicantId==user.id).length>0){
+            setApplied(true);
+        }else setApplied(false);
+    }, [props])
     return <div className="">
         <div className='flex justify-between'>
             <div className="flex gap-2 items-center">
@@ -20,10 +42,13 @@ const JobDesc=(props:any)=> {
                 </div>
             </div>
             <div className="flex flex-col gap-2 items-center">
-                <Link to={`/apply-job/${props.id}`} >
+                {props.edit || !applied && <Link to={`/apply-job/${props.id}`} >
                 <Button color="cloud-burst.9" size="sm" variant="light">{props.edit?"Edit":"Apply"}</Button>
-                </Link>
-                {props.edit?<Button color="red.5" size="sm" variant="outline">Delete</Button>:<IconBookmark className='text-cloud-burst-600 cursor-pointer' stroke={2} />}
+                </Link>}
+                {
+                   applied && <Button color="green.8" size="sm" variant="light">Applied</Button>   
+                }
+                {props.edit?<Button color="red.5" size="sm" variant="outline">Delete</Button>:profile.savedJobs?.includes(props.id)?<IconBookmarkFilled onClick={handleSaveJob} className='cursor-pointer text-cloud-burst-800' stroke={2} />:<IconBookmark onClick={handleSaveJob} className='text-cloud-burst-100 cursor-pointer hover:text-cloud-burst-800' stroke={2} />}
             </div>
         </div>
         <Divider my="xl"/>

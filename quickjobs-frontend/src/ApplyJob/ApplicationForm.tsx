@@ -2,8 +2,16 @@ import { Button, FileInput, LoadingOverlay, NumberInput, TextInput, Textarea } f
 import { isNotEmpty, useForm } from "@mantine/form";
 import { IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getBase64 } from "../Services/Utilities";
+import { applyJob } from "../Services/JobService";
+import { errorNotification, successNotification } from "../Services/NotificationService";
+import { useSelector } from "react-redux";
 
 const ApplicationForm=()=>{
+    const navigate = useNavigate();
+    const {id} = useParams();
+    const user=useSelector((state:any)=>state.user);
     const [preview, setPreview] = useState(false);
     const [submit, setSubmit] = useState(false);
     const handlePreview =()=> {
@@ -13,9 +21,18 @@ const ApplicationForm=()=>{
         setPreview(!preview);
     }
 
-    const handleSubmit=()=> {
+    const handleSubmit=async()=> {
         setSubmit(true);
-        
+        let resume:any=await getBase64(form.getValues().resume);
+        let applicant={...form.getValues(), applicantId:user.id, resume:resume.split(',')[1]};
+        applyJob(id, applicant).then(() => {
+            setSubmit(false);
+            successNotification("Success", "Application Submitted Successfully");
+            navigate("/job-history");   
+        }).catch((err) => {
+            setSubmit(false);
+            errorNotification("Error", err.response.data.errorMessage);
+        })
     }
     const form = useForm({
         mode:'controlled',
