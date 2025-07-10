@@ -1,46 +1,74 @@
 import { IconCalendarMonth, IconHeart, IconMapPin } from '@tabler/icons-react';
-import logo from "../assets/profileavatar.png";
 import { Avatar, Button, Divider, Modal, Text } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DateInput, TimeInput } from '@mantine/dates';
+import { getProfile } from '../Services/ProfileService';
+import { changeAppStatus } from '../Services/JobService';
+import { errorNotification, successNotification } from '../Services/NotificationService';
+import { formatInterviewTime } from '../Services/Utilities';
 
 const TalentCard = (props:any)=> {
+    const {id} = useParams();
     const [opened, {open, close}] = useDisclosure(false);
-    const [value, setValue] = useState<Date | null>(null);
+    const [date, setDate] = useState<Date | null>(null);
+    const [time, setTime] = useState<any>(null);
     const ref = useRef<HTMLInputElement>(null);
+    const [profile, setProfile] = useState<any>({});
+    useEffect(() => {
+        if(props.applicantId) getProfile(props.applicantId).then((res)=>{
+            setProfile(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+        else setProfile(props);
+    }, [props])
+
+    const handleOffer=(status:string)=>{
+        const [hours, minutes] = time.split(":").map(Number);
+        date?.setHours(hours, minutes);
+        console.log(date);
+        let interview:any={id, applicantId:profile?.id, applicationStatus:status, interviewTime:date};
+        changeAppStatus(interview).then((res) => {
+            successNotification("Interview Scheduled", "Interview Scheduled Successfully");
+            window.location.reload();
+        }).catch((err)=>{
+            console.log(err);
+            errorNotification("Error", err.response.data.errorMessage);
+        })
+    }
     return <div className='bg-cloud-burst-400 p-4 w-96 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-cloud-burst-900'>
         <div className='flex justify-between'>
             <div className="flex gap-2 items-center">
                 <div className='p-2 bg-cloud-burst-200 rounded-full'>
-                    <Avatar size="lg" src={logo} alt="compay logo" />
+                    <Avatar size="lg" src={profile?.picture?`data:image/jpeg;base64,${profile?.picture}`:"../assets/avatar1.png"} alt="compay logo" />
                 </div>
                 <div>
                     <div className='text-cloud-burst-50 text-950 text-lg'>{props.name}</div>
-                    <div className='text-sm text-cloud-burst-100'>{props.role} &bull; {props.company}</div>
+                    <div className='text-sm text-cloud-burst-100'>{profile?.jobTitle} &bull; {profile?.company}</div>
                 </div>
             </div>
             <IconHeart className='text-cloud-burst-100 cursor-pointer' stroke={2} />
         </div>
         <div className='flex gap-2 [&>div]:py-1 [&>div]:px-2 [&>div]:bg-cloud-burst-600 [&>div]:text-cloud-burst-50 [&>div]:rounded-lg [&>div]:text-xs'>
             {
-                props.topSkills?.map((skill:any, index:any) => <div key={index}>{skill}</div>)
+                profile?.skills?.map((skill:any, index:any) =>index < 5 && <div key={index}>{skill}</div>)
             }
         </div>
         <Text className='!text-xs text-justify !text-cloud-burst-100' lineClamp={2}>
-            {props.about}
+            {profile?.about}
         </Text>
         <Divider size="xs"/>
         {
             props.invited?<div className='flex gap-1 text-cloud-burst-50 text-sm items-center'>
-                <IconCalendarMonth stroke={1.5}/>Interview: August 27, 2025 10:00 AM
+                <IconCalendarMonth stroke={1.5}/>Interview: {formatInterviewTime(props.interviewTime)}
             </div>:<div className='flex justify-between'>
             <div className='text-cloud-burst-100 font-semibold'>
-               {props.expectedCtc}
+               23 LPA
             </div>
             <div className='flex gap-1 text-xs text-cloud-burst-100 items-center'>
-                    <IconMapPin className='h-5 w-5 text-cloud-burst-50' stroke={1.5} /> {props.location}
+                    <IconMapPin className='h-5 w-5 text-cloud-burst-50' stroke={1.5} /> {profile?.location}
             </div>
             </div>
         }
@@ -70,9 +98,9 @@ const TalentCard = (props:any)=> {
         </div>
         <Modal opened={opened} onClose={close} title="Schedule Interview" centered>
             <div className='flex flex-col gap-4'>
-                <DateInput value={value} minDate={new Date()} onChange={setValue} label="Date" placeholder='Enter Date' />
-                <TimeInput label="Time" ref={ref} onClick={()=> ref.current?.showPicker()} />
-                <Button color="cloud-burst.8" variant="light" fullWidth>Schedule</Button>
+                <DateInput value={date} minDate={new Date()} onChange={setDate} label="Date" placeholder='Enter Date' />
+                <TimeInput label="Time" value={time} onChange={(event)=>setTime(event.currentTarget.value)} ref={ref} onClick={()=> ref.current?.showPicker()} />
+                <Button onClick={()=>handleOffer("INTERVIEWING")} color="cloud-burst.8" variant="light" fullWidth>Schedule</Button>
             </div>
         </Modal>
     </div>

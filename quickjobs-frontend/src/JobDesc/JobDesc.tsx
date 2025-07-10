@@ -46,7 +46,7 @@ const JobDesc=(props:any)=> {
                 <Button color="cloud-burst.9" size="sm" variant="light">{props.edit?"Edit":"Apply"}</Button>
                 </Link>}
                 {
-                   applied && <Button color="green.8" size="sm" variant="light">Applied</Button>   
+                   !props.edit && applied && <Button color="green.8" size="sm" variant="light">Applied</Button>   
                 }
                 {props.edit?<Button color="red.5" size="sm" variant="outline">Delete</Button>:profile.savedJobs?.includes(props.id)?<IconBookmarkFilled onClick={handleSaveJob} className='cursor-pointer text-cloud-burst-800' stroke={2} />:<IconBookmark onClick={handleSaveJob} className='text-cloud-burst-100 cursor-pointer hover:text-cloud-burst-800' stroke={2} />}
             </div>
