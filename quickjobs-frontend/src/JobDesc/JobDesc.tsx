@@ -8,6 +8,8 @@ import { timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { useEffect, useState } from "react";
+import { postJob } from "../Services/JobService";
+import { errorNotification, successNotification } from "../Services/NotificationService";
 
 const JobDesc=(props:any)=> {
     const dispatch = useDispatch();
@@ -24,6 +26,14 @@ const JobDesc=(props:any)=> {
         }
         let updatedProfile={...profile, savedJobs:savedJobs};
         dispatch(changeProfile(updatedProfile));
+    }
+
+    const handleClose=()=>{
+        postJob({...props, jobStatus: "CLOSED"}).then((res)=> {
+            successNotification("Success", "Job Closed Successfully");
+        }).catch((err)=>{
+            errorNotification("Error", err.response.data.errorMessage);
+        })
     }
     useEffect(()=>{
         if(props.applicant?.filter((applicant:any)=>applicant.applicantId==user.id).length>0){
@@ -42,13 +52,13 @@ const JobDesc=(props:any)=> {
                 </div>
             </div>
             <div className="flex flex-col gap-2 items-center">
-                {props.edit || !applied && <Link to={`/apply-job/${props.id}`} >
-                <Button color="cloud-burst.9" size="sm" variant="light">{props.edit?"Edit":"Apply"}</Button>
+                {props.edit || !applied && <Link to={props.edit?`/post-job/${props.id}`:`/apply-job/${props.id}`} >
+                <Button color="cloud-burst.9" size="sm" variant="light">{props.closed?"Reopen":props.edit?"Edit":"Apply"}</Button>
                 </Link>}
                 {
                    !props.edit && applied && <Button color="green.8" size="sm" variant="light">Applied</Button>   
                 }
-                {props.edit?<Button color="red.5" size="sm" variant="outline">Delete</Button>:profile.savedJobs?.includes(props.id)?<IconBookmarkFilled onClick={handleSaveJob} className='cursor-pointer text-cloud-burst-800' stroke={2} />:<IconBookmark onClick={handleSaveJob} className='text-cloud-burst-100 cursor-pointer hover:text-cloud-burst-800' stroke={2} />}
+                {props.edit && !props.closed ? <Button color="red.5" onClick={handleClose} size="sm" variant="outline">Close</Button>:profile.savedJobs?.includes(props.id)?<IconBookmarkFilled onClick={handleSaveJob} className='cursor-pointer text-cloud-burst-800' stroke={2} />:<IconBookmark onClick={handleSaveJob} className='text-cloud-burst-100 cursor-pointer hover:text-cloud-burst-800' stroke={2} />}
             </div>
         </div>
         <Divider my="xl"/>
