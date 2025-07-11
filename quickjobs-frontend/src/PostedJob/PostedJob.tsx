@@ -7,7 +7,7 @@ const PostedJob=(props:any)=> {
     useEffect(() => {
         setActiveTab(props.job?.jobStatus||'ACTIVE');
     }, [props.job])
-    return <div>
+    return <div className="w-1/5">
         <div className="text-2xl font-semibold mb-5">Jobs</div>
         <div>
             <Tabs autoContrast variant="pills" value={activeTab} onChange={setActiveTab}>

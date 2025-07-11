@@ -4,7 +4,7 @@ import TalentCard from "../FindTalent/TalentCard";
 
 const PostedJobDesc=(props:any)=> {
     return <div className="mt-5 w-3/4 px-5">
-        <div className="text-2xl font-semibold flex items-center text-cloud-burst-900">{props.jobTitle} <Badge variant="light" ml="sm" color="cloud-burst.6" size="sm">{props.jobStatus}</Badge></div>
+        {props.jobTitle?<><div className="text-2xl font-semibold flex items-center text-cloud-burst-900">{props.jobTitle} <Badge variant="light" ml="sm" color="cloud-burst.6" size="sm">{props.jobStatus}</Badge></div>
         <div  className="font-medium text-cloud-burst-600 mb-5 flex items-left">{props.location}</div>
         <div>
         <Tabs variant="outline" radius="lg" defaultValue="about">
@@ -26,15 +26,30 @@ const PostedJobDesc=(props:any)=> {
                 )}
                 </div>
             </Tabs.Panel>
-            <Tabs.Panel value="interviewing">
+            <Tabs.Panel value="invited">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5 mt-10">
                     {props.applicants?.filter((x:any)=>x.applicationStatus=="INTERVIEWING").map((talent:any, index:any) =>( <TalentCard key={index} {...talent} invited={true} />
                     )
                 )}
                 </div>
             </Tabs.Panel>
+            <Tabs.Panel value="offered">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5 mt-10">
+                    {props.applicants?.filter((x:any)=>x.applicationStatus=="OFFERED").map((talent:any, index:any) =>( <TalentCard key={index} {...talent} offered />
+                    )
+                )}
+                </div>
+            </Tabs.Panel>
+            <Tabs.Panel value="rejected">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5 mt-10">
+                    {props.applicants?.filter((x:any)=>x.applicationStatus=="REJECTED").map((talent:any, index:any) =>( <TalentCard key={index} {...talent} offered />
+                    )
+                )}
+                </div>
+            </Tabs.Panel>
             </Tabs>
         </div>
+        </>:<div className="text-2xl font-semibold flex min-h-[70vh] justify-center items-center">No Job Selected</div>}
     </div>
 }
 
