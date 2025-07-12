@@ -7,7 +7,7 @@ const Jobs=()=> {
     const [jobList, setJobList] = useState([{}]);
     useEffect(() =>{
         getAllJobs().then((res) =>{
-            setJobList(res);
+            setJobList(res.filter((job:any)=>job.jobStatus=="ACTIVE"));
         }).catch((err) => {
             console.log(err);
         })
