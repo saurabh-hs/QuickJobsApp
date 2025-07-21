@@ -12,15 +12,15 @@ const SearchBar=()=> {
             dispatch(updateFilter({salary:event}));
     }
     return(
-        <div className="flex gap-2 px-5 py-5">
+        <div className="lg-mx:!flex-wrap flex gap-2 px-5 py-5">
             {
-                dropdownData.map((item, index) =><> <div key={index} className="w-1/5">
+                dropdownData.map((item, index) =><> <div key={index} className="w-1/5 lg-mx:w-1/4 bs-mx:w-[30%]">
                     <MultiInputs {...item} />
                     </div>
                     <Divider mr="xs" size="xs" orientation="vertical" />
                     </>)
             }
-            <div className="w-1/5 [&_.mantine-Slider-label]:!translate-y-10">
+            <div className="w-1/5 lg-mx:w-1/4 lg-mx:mt-5 bs-mx:w-[30%] [&_.mantine-Slider-label]:!translate-y-10">
                 <div className="flex text-sm justify-between">
                     <div>Salary</div>
                     <div>&#8377;{value[0]} LPA - &#8377;{value[1]} LPA</div>

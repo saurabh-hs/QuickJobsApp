@@ -1,5 +1,4 @@
 import { Menu, Avatar, Switch } from '@mantine/core';
-import profileImage from "../assets/profile.png";
 import {
   IconMessageCircle,
   IconUserCircle,
@@ -28,7 +27,7 @@ const ProfileMenu = () => {
     <Menu shadow="md" width={200} opened={opened} onChange={setOpened}>
       <Menu.Target>
         <div className="flex gap-2 items-center cursor-pointer">
-          <div className="text-1xl font-semibold">{user.name}</div>
+          <div className="xs-mx:hidden text-1xl font-semibold">{user.name}</div>
           <Avatar src={profile.picture?`data:image/jpeg;base64,${profile.picture}`:"../assets/avatar1.png"} alt="it's me" />
         </div>
       </Menu.Target>
