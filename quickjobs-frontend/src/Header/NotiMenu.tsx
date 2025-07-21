@@ -16,7 +16,7 @@ const NotiMenu = () => {
     }, [user]);
     const unread=(index:number)=>{
         let notis=[...notifications];
-        notis.filter((noti:any, i:number)=>i!=index);
+        notis.filter((i:number)=>i!=index);
         setNotifications(notis);
         readNotifications(notifications[index].id).then((res)=>console.log(res)).catch((err)=>console.log(err));
     }

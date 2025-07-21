@@ -1,14 +1,17 @@
 import { Button, LoadingOverlay, PasswordInput, TextInput, rem } from "@mantine/core";
-import { IconAt, IconCheck, IconLock, IconX } from "@tabler/icons-react";
+import { IconAt, IconLock, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../Services/UserService";
 import { loginValidation } from "../Services/FormValidation";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import ResetPassword from "./ResetPassword";
 import { useDispatch } from "react-redux";
 import { setUser } from "../Slices/UserSlice";
+import { successNotification } from "../Services/NotificationService";
+import { setJwt } from "../Slices/JwtSlice";
+import { loginUser } from "../Services/AuthService";
+import { jwtDecode } from "jwt-decode";
 const form = {
     email: "",
     password: ""
@@ -35,19 +38,12 @@ const Login = () => {
         if (valid) {
             setLoading(true);
             loginUser(data).then((res) => {
-                console.log(res);
-                notifications.show({
-                    title: 'User Login Successfully',
-                    message: 'Redirecting to home page...',
-                    withCloseButton: true,
-                    icon: <IconCheck style={{ width: "90%", height: "90%" }} />,
-                    color: "teal",
-                    withBorder: true,
-                    className: "!border-green-500"
-                })
+                successNotification("Login Successful", "Redirecting to home page...");
+                dispatch(setJwt(res.jwt));
+                const decoded = jwtDecode(res.jwt);
+                dispatch(setUser({...decoded, email:decoded.sub}));
                 setTimeout(() => {
-                    setLoading(false);
-                    dispatch(setUser(res));
+                    // dispatch(setUser(res));
                     navigate("/");
                 }, 2000)
             }).catch((err) => {
